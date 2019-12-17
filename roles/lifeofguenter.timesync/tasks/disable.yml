@@ -1,0 +1,5 @@
+---
+
+- name: disable timesync
+  command: timedatectl set-ntp false
+  become: yes

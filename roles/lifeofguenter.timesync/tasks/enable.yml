@@ -1,0 +1,21 @@
+---
+
+- name: install dependencies
+  apt:
+    name: dbus
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+
+- name: copy timesyncd default conf
+  template:
+    src: timesyncd.conf
+    dest: /etc/systemd/timesyncd.conf
+    mode: 0644
+  notify: restart_timesyncd
+  become: yes
+
+- name: enable timesync
+  command: timedatectl set-ntp true
+  become: yes
