@@ -1,0 +1,5 @@
+---
+
+ntp__ntp_package: ntp
+ntp__tzdata_package: tzdata
+ntp__conf_file: /etc/ntp.conf

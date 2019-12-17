@@ -1,0 +1,40 @@
+---
+
+- name: NTP | Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: NTP | Install NTP
+  package:
+    name: "{{ ntp__ntp_package }}"
+    state: present
+
+- name: NTP | Install tzdata
+  package:
+    name: "{{ ntp__tzdata_package }}"
+    state: present
+
+- name: Set timezone
+  timezone:
+    name: "{{ ntp__timezone }}"
+
+- name: NTP | Start & Enable NTP
+  service:
+    name: "{{ ntp__daemon }}"
+    state: started
+    enabled: true
+  when:
+    - ntp__enabled | bool
+
+- name: NTP | Stop & Disable NTP
+  service:
+    name: "{{ ntp__daemon }}"
+    state: stopped
+    enabled: false
+  when:
+    - not ntp__enabled | bool
+
+- name: NTP | Generate ntp.conf
+  template:
+    src: "{{ ntp__conf_tpl }}"
+    dest: "{{ ntp__conf_file }}"
+  notify: Restart NTP

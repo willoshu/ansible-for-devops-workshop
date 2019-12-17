@@ -1,0 +1,8 @@
+---
+
+- name: Restart NTP
+  service:
+    name: "{{ ntp__daemon }}"
+    state: restarted
+  when:
+    - ntp__enabled | bool

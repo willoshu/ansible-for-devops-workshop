@@ -1,0 +1,11 @@
+---
+
+ntp__enabled: true
+ntp__timezone:
+
+ntp__conf_tpl: ntp.conf.j2
+
+ntp__servers: 
+  - "time.google.com iburst"
+
+ntp__restrict: []
