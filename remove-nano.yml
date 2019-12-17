@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+
+  tasks: 
+  - name: remove nano
+    yum:
+      name: nano
+      state: absent
